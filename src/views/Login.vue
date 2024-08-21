@@ -46,8 +46,12 @@
 import { ref } from 'vue';
 import { apiClient } from '../helper/fetchApi.js';
 import { ShowSnack } from '../composable/useComponent';
+import { useBiteStore } from '../composable/usePinia';
+import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
+const store = useBiteStore();
+const router = useRouter();
 
 let loading = ref(false);
 const handleSubmit = async (e) => {
@@ -69,7 +73,9 @@ const handleSubmit = async (e) => {
 
     if (res == 200 || 201) {
       ShowSnack('Successfully Logged In', 'positive');
-      console.log(data);
+      let user = data.user[0];
+      store.setUserData(user);
+      router.push('/home');
     }
   } catch (error) {
     loading.value = false;

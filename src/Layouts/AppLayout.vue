@@ -1,6 +1,6 @@
 <template>
   <div class="px-3">
-    <header class="my-3">Welcome, Jonnas</header>
+    <header class="my-3">Welcome, {{ userData.username }}</header>
     <div class="grid"></div>
     <v-layout class="overflow-visible" style="height: 56px">
       <slot />
@@ -37,6 +37,22 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { useBiteStore } from '@/composable/usePinia';
+import { apiClient } from '@/helper/fetchApi';
+import { ShowSnack } from '@/composable/useComponent';
+import { ref, onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
+const store = useBiteStore();
+const userData = store.userData;
+const router = useRouter();
 const value = ref(0);
+const fetchDatas = async () => {
+  const res = await apiClient('/api/user/user', 'GET');
+  // console.log(res);
+  if (res.status == 401) {
+    ShowSnack('Session Closed, Please Login', 'negative');
+    router.push('/login');
+  }
+};
+fetchDatas();
 </script>
