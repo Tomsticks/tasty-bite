@@ -38,6 +38,7 @@
         @click="handleSubmit"
         >Login
       </v-btn>
+      <p @click="$router.push('/register')">Dont have an Account Register</p>
     </form>
   </main>
 </template>
@@ -48,9 +49,11 @@ import { apiClient } from '../helper/fetchApi.js';
 import { ShowSnack } from '../composable/useComponent';
 import { useBiteStore } from '../composable/usePinia';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 const email = ref('');
 const password = ref('');
 let store = useBiteStore();
+// const {userData, token} = storeToRefs(store)
 const router = useRouter();
 
 let loading = ref(false);

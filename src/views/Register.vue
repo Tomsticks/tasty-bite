@@ -65,6 +65,7 @@
       >
         Create Account</v-btn
       >
+      <p @click="$router.push('/login')">Already have an Account Login</p>
     </form>
   </main>
 </template>
@@ -73,6 +74,8 @@
 import { ref } from 'vue';
 import { apiClient } from '../helper/fetchApi.js';
 import { ShowSnack } from '../composable/useComponent';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const email = ref('');
 const password = ref('');
 const name = ref('');
@@ -107,9 +110,9 @@ const handleSubmit = async () => {
       throw { err: data };
     }
 
-    if (res == 200 || 201) {
+    if (res.status == 200 || res.status == 201) {
       ShowSnack('Account Registred Successfully', 'positive');
-      console.log(data);
+      router.push('/login');
     }
   } catch (error) {
     loading.value = false;

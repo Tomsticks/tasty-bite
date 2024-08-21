@@ -50,7 +50,13 @@ router.beforeResolve((to, from, next) => {
   const token = localStorage.getItem('token');
   const storeToken = store.token;
 
-  if (to.name !== 'Login' && to.name !== 'Register' && !token && !storeToken) {
+  if (
+    to.name !== 'welcome' &&
+    to.name !== 'Login' &&
+    to.name !== 'Register' &&
+    !token &&
+    !storeToken
+  ) {
     next({ name: 'Login' });
   } else {
     next();
