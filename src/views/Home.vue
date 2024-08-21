@@ -68,7 +68,9 @@
 <script setup>
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { useBiteStore } from '@/composable/usePinia';
 const num = ref(2);
+const store = useBiteStore()
 const foods = ref([
   {
     name: 'Pizza',

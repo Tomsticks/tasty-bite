@@ -50,7 +50,7 @@ import { useBiteStore } from '../composable/usePinia';
 import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
-const store = useBiteStore();
+let store = useBiteStore();
 const router = useRouter();
 
 let loading = ref(false);
@@ -67,14 +67,19 @@ const handleSubmit = async (e) => {
       password: password.value,
     });
     const data = await res.json();
+    // const token = data.
+
     if (res.status == 400) {
       throw { err: data.error.code };
     }
 
-    if (res == 200 || 201) {
+    if (res.status == 200 || res.status == 201) {
       ShowSnack('Successfully Logged In', 'positive');
-      let user = data.user[0];
+      const user = data.user[0];
+      const token = data.token;
+
       store.setUserData(user);
+      store.setToken(token, true);
       router.push('/home');
     }
   } catch (error) {
@@ -95,10 +100,7 @@ const handleSubmit = async (e) => {
     } else if (error.err == 'Please fill in all fields') {
       ShowSnack('Please fill in all fields', 'negative');
     } else {
-      ShowSnack(
-        'Check Internet Connection. Error Ecountered Try Again.',
-        'negative'
-      );
+      ShowSnack(error.err, 'negative');
     }
   }
 };

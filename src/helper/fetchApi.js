@@ -1,6 +1,6 @@
 // const url = 'http://localhost:5000/api';
-// const baseurl = 'https://bitebuddy-hehl.onrender.com';
-const baseurl = 'http://localhost:3050';
+const baseurl = 'https://bitebuddy-hehl.onrender.com';
+// const baseurl = 'http://localhost:3050';
 
 export const apiClient = async (route, method, body) => {
   try {

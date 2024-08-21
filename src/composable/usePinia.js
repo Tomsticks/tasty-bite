@@ -11,7 +11,7 @@ export const useBiteStore = defineStore({
       orders: [],
       cart: [],
       profile: {},
-      token: '',
+      token: null,
     };
   },
   actions: {
@@ -36,8 +36,8 @@ export const useBiteStore = defineStore({
     setCart(data) {
       this.cart = data;
     },
-    setToken(token) {
-      let name = 'Token';
+    setToken(token, set) {
+      let name = 'token';
       if (set) {
         this.token = token;
         localStorage.setItem(name, token);

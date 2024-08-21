@@ -40,19 +40,38 @@
 import { useBiteStore } from '@/composable/usePinia';
 import { apiClient } from '@/helper/fetchApi';
 import { ShowSnack } from '@/composable/useComponent';
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
 const store = useBiteStore();
-const userData = store.userData;
+const { userData } = storeToRefs(store);
+
 const router = useRouter();
 const value = ref(0);
-const fetchDatas = async () => {
-  const res = await apiClient('/api/user/user', 'GET');
-  // console.log(res);
-  if (res.status == 401) {
+// console.log(userData);
+async function fetchData() {
+  try {
+    const res = await apiClient('/api/user/user', 'GET');
+    const res2 = await res.json();
+    const user = res2.data.user.user[0];
+    const token = res2.data.user.token;
+    // console.log(userData);
+    if (res.status == 201 || 200) {
+      store.setUserData(user);
+      store.setToken(token, true);
+    }
+    if (res.status == 401) {
+      throw { err: res2 };
+    }
+  } catch (error) {
     ShowSnack('Session Closed, Please Login', 'negative');
+    store.setToken(null, false);
     router.push('/login');
   }
-};
-fetchDatas();
+}
+onBeforeMount(() => {
+  fetchData();
+});
+fetchData();
 </script>

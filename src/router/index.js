@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useBiteStore } from '@/composable/usePinia';
 // import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -44,17 +45,15 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/login' || to.path === '/register') {
-    next();
+router.beforeResolve((to, from, next) => {
+  const store = useBiteStore();
+  const token = localStorage.getItem('token');
+  const storeToken = store.token;
+
+  if (to.name !== 'Login' && to.name !== 'Register' && !token && !storeToken) {
+    next({ name: 'Login' });
   } else {
-    const token = localStorage.getItem('token');
-    if (token) {
-      next();
-    } else {
-      next('/login');
-    }
+    next();
   }
 });
-
 export default router;
