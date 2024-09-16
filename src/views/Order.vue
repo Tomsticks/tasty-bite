@@ -1,7 +1,5 @@
 <template>
   <div>
-    <v-layout>
-      
-    </v-layout>
+    <v-layout> oder </v-layout>
   </div>
 </template>
