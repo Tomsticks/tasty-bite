@@ -1,13 +1,10 @@
 <template>
-  <div class="px-3">
-    <header class="my-3">Welcome, {{ userData.username }}</header>
-    <div class="grid"></div>
-    <v-layout class="overflow-visible" style="height: 56px">
-      <slot />
+  <div class="px-1">
+    <slot />
+    <v-layout class="" style="height: 56px">
       <v-bottom-navigation
         v-model="value"
-        color="#FCC046"
-        class="text-gary"
+        background-color="primary"
         active
         grow
       >
@@ -45,7 +42,6 @@ import { useRouter } from 'vue-router';
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 const store = useBiteStore();
-const { userData } = storeToRefs(store);
 
 const router = useRouter();
 const value = ref(0);
@@ -57,7 +53,7 @@ async function fetchData() {
     const user = res2.data.user.user[0];
     const token = res2.data.user.token;
     // console.log(userData);
-    if (res.status == 201 || 200) {
+    if (res.status == 201 || res.status == 200) {
       store.setUserData(user);
       store.setToken(token, true);
     }
@@ -73,5 +69,4 @@ async function fetchData() {
 onBeforeMount(() => {
   fetchData();
 });
-fetchData();
 </script>

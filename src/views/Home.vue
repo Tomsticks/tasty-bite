@@ -1,28 +1,45 @@
 <template>
   <AppLayout>
-    <main class="space-y-4">
+    <main class="">
+      <nav class="flex justify-between py-2 shadow-md bg-white">
+        <div class="location_bar">
+          <div class="location_bar__text text-[gray] py- w-[200px] border-[]">
+            <v-icon>mdi-map-marker</v-icon> Los Angles
+          </div>
+        </div>
+        <div>
+          <v-icon size="25"> mdi-bell</v-icon>
+        </div>
+      </nav>
+
+      <header class="">
+        Welcome,
+        <span class="text-[#FCC046] font-bold tex"
+          >{{ userData.username }} Tomzor</span
+        >
+        <p>Find your delicious dish</p>
+      </header>
+      <section class="pb-1">
+        <v-text-field
+          @click="$router.push('/search')"
+          class="shadow-md"
+          append-inner-icon="mdi-magnify"
+          label="Search your food..."
+          variant="solo"
+          hide-details
+          single-line
+        ></v-text-field>
+      </section>
       <!-- Graphic Section -->
-      <section class="w-[100%] h-auto">
-        <div class="">
-          <img
-            src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/burger-banner-display-ads-design-template-de3bb854b3eb64b3b9ca7144ce05b142_screen.jpg?ts=1644218341"
+      <section class="py-2">
+        <div class="flex items-center justify-center h-0vh]">
+          <v-img
+            aspect-ratio="4/3"
+            src="https://res.cloudinary.com/dvrpodtdw/image/upload/v1724416994/16f8568d-5c0b-11ed-a676-161732b6f9bd_1_uj8kk0.jpg"
             alt=""
-            class=""
+            class="w-[100%] h-[100%]"
           />
         </div>
-      </section>
-      <section>
-        <v-card-text>
-          <v-text-field
-            class="shadow-md"
-            append-inner-icon="mdi-magnify"
-            density="compact"
-            label="Search your food..."
-            variant="solo"
-            hide-details
-            single-line
-          ></v-text-field>
-        </v-card-text>
       </section>
 
       <section>
@@ -32,13 +49,16 @@
               class="flex justify-between items-center shadow-md px-1 rounded-lg bg-white"
             >
               <p>{{ item.name }}</p>
-              <img class="w-10 sm:w-52" :src="item.img" alt="" />
+              <img class="w-10 sm:w-20" :src="item.img" alt="" />
             </div>
           </div>
         </div>
       </section>
       <section class="">
-        <h2>Popular For You</h2>
+        <div class="">
+          <h6>Popular For You</h6>
+          <p @click="$router.push('/login')">Show all</p>
+        </div>
         <div class="grid grid-cols-2 gap-3 pb-20">
           <div v-for="(item, index) in Popular" :key="index">
             <div
@@ -69,8 +89,11 @@
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useBiteStore } from '@/composable/usePinia';
+import { storeToRefs } from 'pinia';
 const num = ref(2);
-const store = useBiteStore()
+
+const store = useBiteStore();
+const { userData } = storeToRefs(store);
 const foods = ref([
   {
     name: 'Pizza',
@@ -119,3 +142,8 @@ const Popular = ref([
   },
 ]);
 </script>
+
+<style scoped>
+
+
+</style>

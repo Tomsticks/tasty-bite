@@ -113,6 +113,7 @@ const handleSubmit = async () => {
     if (res.status == 200 || res.status == 201) {
       ShowSnack('Account Registred Successfully', 'positive');
       router.push('/login');
+      router.replace('/login')
     }
   } catch (error) {
     loading.value = false;
