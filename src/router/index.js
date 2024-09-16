@@ -69,8 +69,8 @@ router.beforeResolve((to, from, next) => {
     to.name !== 'welcome' &&
     to.name !== 'Login' &&
     to.name !== 'Register' &&
-    !storeToken &&
-    !token 
+    !token &&
+    !storeToken
   ) {
     next({ name: 'Login' });
   } else {
