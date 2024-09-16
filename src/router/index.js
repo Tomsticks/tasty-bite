@@ -55,7 +55,7 @@ const router = createRouter({
     {
       path: '/order/:id',
       name: 'Search',
-      component: () => import('../views/order.vue'),
+      component: () => import('../views/Order.vue'),
     },
   ],
 });
